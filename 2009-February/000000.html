@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xrtl-user] Problem with item updates on client side - decision...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xrtl-user/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:xrtl-user%40lists.berlios.de?Subject=Re%3A%20%5Bxrtl-user%5D%20Problem%20with%20item%20updates%20on%20client%20side%20-%20decision...&In-Reply-To=%3C137676665.20090214213408%40mail.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xrtl-user] Problem with item updates on client side - decision...</H1>
+    <B>Vladimir Sherbina</B> 
+    <A HREF="mailto:xrtl-user%40lists.berlios.de?Subject=Re%3A%20%5Bxrtl-user%5D%20Problem%20with%20item%20updates%20on%20client%20side%20-%20decision...&In-Reply-To=%3C137676665.20090214213408%40mail.ru%3E"
+       TITLE="[xrtl-user] Problem with item updates on client side - decision...">V.Sherbina at mail.ru
+       </A><BR>
+    <I>Sat Feb 14 19:34:08 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000001.html">[xrtl-user] Problem with item updates on client side -	decision...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi, colleagues.
+
+Answer to most peoples, which ask about item modify notifications
+for update items...
+
+The different OPC clients has different behavior when add the groups,
+some clients subscribe group notification when the group not contain
+the active items.
+
+For testing XRTL server implementation I use the OPC Data Spy from
+Iconics. This client has different behavior by different startup
+process. If start it from stored file with client configuration -
+XRTL work. But if I try open application and set connection to XRTL OPC
+server - I have a problem with item updates.
+If update by &quot;Refresh&quot; button - its Ok.
+
+
+For decide this problem I make some modification in the
+xrtl_opc_sdk_OPCDA20Group.pas unit in the
+function TXRTLOPCDA20Group.EnqueueASyncRefresh(dwSource: OPCDATASOURCE;
+  dwTransactionID: DWORD; out pdwCancelID: DWORD; DoOnDataChange: Boolean): HResult;
+
+was:
+if not(FActive and HasActiveItems) then ...
+now:
+if not(FActive) then ...
+
+After that - all clients update items properly.
+
+For Illya Kysil - please comment.
+
+PS Sorry for my English.
+-- 
+With best regards,
+Vladimir Sherbina.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000001.html">[xrtl-user] Problem with item updates on client side -	decision...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xrtl-user">More information about the xrtl-user
+mailing list</a><br>
+</body></html>

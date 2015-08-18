@@ -1,0 +1,178 @@
+From V.Sherbina at mail.ru  Sat Feb 14 19:34:08 2009
+From: V.Sherbina at mail.ru (Vladimir Sherbina)
+Date: Sat, 14 Feb 2009 21:34:08 +0300
+Subject: [xrtl-user] Problem with item updates on client side - decision...
+Message-ID: <137676665.20090214213408@mail.ru>
+
+Hi, colleagues.
+
+Answer to most peoples, which ask about item modify notifications
+for update items...
+
+The different OPC clients has different behavior when add the groups,
+some clients subscribe group notification when the group not contain
+the active items.
+
+For testing XRTL server implementation I use the OPC Data Spy from
+Iconics. This client has different behavior by different startup
+process. If start it from stored file with client configuration -
+XRTL work. But if I try open application and set connection to XRTL OPC
+server - I have a problem with item updates.
+If update by "Refresh" button - its Ok.
+
+
+For decide this problem I make some modification in the
+xrtl_opc_sdk_OPCDA20Group.pas unit in the
+function TXRTLOPCDA20Group.EnqueueASyncRefresh(dwSource: OPCDATASOURCE;
+  dwTransactionID: DWORD; out pdwCancelID: DWORD; DoOnDataChange: Boolean): HResult;
+
+was:
+if not(FActive and HasActiveItems) then ...
+now:
+if not(FActive) then ...
+
+After that - all clients update items properly.
+
+For Illya Kysil - please comment.
+
+PS Sorry for my English.
+-- 
+With best regards,
+Vladimir Sherbina.
+
+
+
+From ikysil at gmail.com  Sat Feb 14 22:51:47 2009
+From: ikysil at gmail.com (Illya Kysil)
+Date: Sat, 14 Feb 2009 23:51:47 +0200
+Subject: [xrtl-user] Problem with item updates on client side -
+	decision...
+In-Reply-To: <137676665.20090214213408@mail.ru>
+References: <137676665.20090214213408@mail.ru>
+Message-ID: <abc88d100902141351s75da2e68i8d2f57ed029b268c@mail.gmail.com>
+
+Hi Vladimir,
+
+Nice to know this code still helps to solve some problems :)
+
+As to the proposed change - do you have access to any OPC compliance test suite?
+It's hard to justify the cost of OPC Foundation membership for me just
+to get the compliance testing tool.
+Or wait, I have to pay just to get access to specification??? WTF?!?
+
+I had an official suite when that code was produced. And all tests
+were satisfied.
+Nobody can say if the proposed modification breaks some specification or not
+without access to any decent OPC compliance testing tool.
+
+I'm not going to assert that XRTL OPC SDK have no compliance issues
+taking into account following:
+- there were no code updates since 2005;
+- the original tool used to test the server sample may have bugs too;
+- the most advanced processor at the time was Pentium (something) with
+HyperThreading technology.
+
+On Sat, Feb 14, 2009 at 20:34, Vladimir Sherbina <V.Sherbina at mail.ru> wrote:
+> Hi, colleagues.
+>
+> Answer to most peoples, which ask about item modify notifications
+> for update items...
+>
+> The different OPC clients has different behavior when add the groups,
+> some clients subscribe group notification when the group not contain
+> the active items.
+>
+> For testing XRTL server implementation I use the OPC Data Spy from
+> Iconics. This client has different behavior by different startup
+> process. If start it from stored file with client configuration -
+> XRTL work. But if I try open application and set connection to XRTL OPC
+> server - I have a problem with item updates.
+> If update by "Refresh" button - its Ok.
+>
+>
+> For decide this problem I make some modification in the
+> xrtl_opc_sdk_OPCDA20Group.pas unit in the
+> function TXRTLOPCDA20Group.EnqueueASyncRefresh(dwSource: OPCDATASOURCE;
+>  dwTransactionID: DWORD; out pdwCancelID: DWORD; DoOnDataChange: Boolean): HResult;
+>
+> was:
+> if not(FActive and HasActiveItems) then ...
+> now:
+> if not(FActive) then ...
+>
+> After that - all clients update items properly.
+>
+> For Illya Kysil - please comment.
+>
+> PS Sorry for my English.
+> --
+> With best regards,
+> Vladimir Sherbina.
+>
+> _______________________________________________
+> xrtl-user mailing list
+> xrtl-user at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/xrtl-user
+>
+
+
+
+-- 
+Illya Kysil
+--
+Beware of he who would deny you access to information,
+for in his heart he dreams himself your master.
+
+
+From V.Sherbina at mail.ru  Sun Feb 15 10:13:02 2009
+From: V.Sherbina at mail.ru (Vladimir Sherbina)
+Date: Sun, 15 Feb 2009 12:13:02 +0300
+Subject: [xrtl-user] Problem with item updates on client side -
+	decision...
+In-Reply-To: <abc88d100902141351s75da2e68i8d2f57ed029b268c@mail.gmail.com>
+References: <137676665.20090214213408@mail.ru>
+	<abc88d100902141351s75da2e68i8d2f57ed029b268c@mail.gmail.com>
+Message-ID: <86294075.20090215121302@mail.ru>
+
+Hi, Illya.
+
+Illya Kysil wrote 15 February 2009, 0:51:47 wrote:
+
+> Hi Vladimir,
+
+> Nice to know this code still helps to solve some problems
+
+> As to the proposed change - do you have access to any OPC compliance test suite?
+> It's hard to justify the cost of OPC Foundation membership for me just
+> to get the compliance testing tool.
+> Or wait, I have to pay just to get access to specification??? WTF?!?
+
+> I had an official suite when that code was produced. And all tests
+> were satisfied.
+> Nobody can say if the proposed modification breaks some specification or not
+> without access to any decent OPC compliance testing tool.
+
+> I'm not going to assert that XRTL OPC SDK have no compliance issues
+> taking into account following:
+> - there were no code updates since 2005;
+> - the original tool used to test the server sample may have bugs too;
+> - the most advanced processor at the time was Pentium (something) with
+> HyperThreading technology.
+
+
+Yes, and I think this code still helps not only for me.
+
+No need to define the goal to check XRTL with OPC compliance test
+utility, possible to use good OPC clients (or Server for XRTL Client)
+for testing.
+
+ICONICS company is Charter Member of OPC foundation.
+I use this company products for testing.
+
+
+
+-- 
+Vladimir Sherbina
+
+
+

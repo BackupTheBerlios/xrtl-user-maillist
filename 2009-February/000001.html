@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xrtl-user] Problem with item updates on client side -	decision...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xrtl-user/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:xrtl-user%40lists.berlios.de?Subject=Re%3A%20%5Bxrtl-user%5D%20Problem%20with%20item%20updates%20on%20client%20side%20-%0A%09decision...&In-Reply-To=%3Cabc88d100902141351s75da2e68i8d2f57ed029b268c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000000.html">
+   <LINK REL="Next"  HREF="000002.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xrtl-user] Problem with item updates on client side -	decision...</H1>
+    <B>Illya Kysil</B> 
+    <A HREF="mailto:xrtl-user%40lists.berlios.de?Subject=Re%3A%20%5Bxrtl-user%5D%20Problem%20with%20item%20updates%20on%20client%20side%20-%0A%09decision...&In-Reply-To=%3Cabc88d100902141351s75da2e68i8d2f57ed029b268c%40mail.gmail.com%3E"
+       TITLE="[xrtl-user] Problem with item updates on client side -	decision...">ikysil at gmail.com
+       </A><BR>
+    <I>Sat Feb 14 22:51:47 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000000.html">[xrtl-user] Problem with item updates on client side - decision...
+</A></li>
+        <LI>Next message: <A HREF="000002.html">[xrtl-user] Problem with item updates on client side -	decision...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Vladimir,
+
+Nice to know this code still helps to solve some problems :)
+
+As to the proposed change - do you have access to any OPC compliance test suite?
+It's hard to justify the cost of OPC Foundation membership for me just
+to get the compliance testing tool.
+Or wait, I have to pay just to get access to specification??? WTF?!?
+
+I had an official suite when that code was produced. And all tests
+were satisfied.
+Nobody can say if the proposed modification breaks some specification or not
+without access to any decent OPC compliance testing tool.
+
+I'm not going to assert that XRTL OPC SDK have no compliance issues
+taking into account following:
+- there were no code updates since 2005;
+- the original tool used to test the server sample may have bugs too;
+- the most advanced processor at the time was Pentium (something) with
+HyperThreading technology.
+
+On Sat, Feb 14, 2009 at 20:34, Vladimir Sherbina &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/xrtl-user">V.Sherbina at mail.ru</A>&gt; wrote:
+&gt;<i> Hi, colleagues.
+</I>&gt;<i>
+</I>&gt;<i> Answer to most peoples, which ask about item modify notifications
+</I>&gt;<i> for update items...
+</I>&gt;<i>
+</I>&gt;<i> The different OPC clients has different behavior when add the groups,
+</I>&gt;<i> some clients subscribe group notification when the group not contain
+</I>&gt;<i> the active items.
+</I>&gt;<i>
+</I>&gt;<i> For testing XRTL server implementation I use the OPC Data Spy from
+</I>&gt;<i> Iconics. This client has different behavior by different startup
+</I>&gt;<i> process. If start it from stored file with client configuration -
+</I>&gt;<i> XRTL work. But if I try open application and set connection to XRTL OPC
+</I>&gt;<i> server - I have a problem with item updates.
+</I>&gt;<i> If update by &quot;Refresh&quot; button - its Ok.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> For decide this problem I make some modification in the
+</I>&gt;<i> xrtl_opc_sdk_OPCDA20Group.pas unit in the
+</I>&gt;<i> function TXRTLOPCDA20Group.EnqueueASyncRefresh(dwSource: OPCDATASOURCE;
+</I>&gt;<i>  dwTransactionID: DWORD; out pdwCancelID: DWORD; DoOnDataChange: Boolean): HResult;
+</I>&gt;<i>
+</I>&gt;<i> was:
+</I>&gt;<i> if not(FActive and HasActiveItems) then ...
+</I>&gt;<i> now:
+</I>&gt;<i> if not(FActive) then ...
+</I>&gt;<i>
+</I>&gt;<i> After that - all clients update items properly.
+</I>&gt;<i>
+</I>&gt;<i> For Illya Kysil - please comment.
+</I>&gt;<i>
+</I>&gt;<i> PS Sorry for my English.
+</I>&gt;<i> --
+</I>&gt;<i> With best regards,
+</I>&gt;<i> Vladimir Sherbina.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> xrtl-user mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/xrtl-user">xrtl-user at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/xrtl-user">https://lists.berlios.de/mailman/listinfo/xrtl-user</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Illya Kysil
+--
+Beware of he who would deny you access to information,
+for in his heart he dreams himself your master.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000000.html">[xrtl-user] Problem with item updates on client side - decision...
+</A></li>
+	<LI>Next message: <A HREF="000002.html">[xrtl-user] Problem with item updates on client side -	decision...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xrtl-user">More information about the xrtl-user
+mailing list</a><br>
+</body></html>
